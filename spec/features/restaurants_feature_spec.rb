@@ -1,6 +1,17 @@
 require 'rails_helper.rb'
 
 feature 'restaurants' do
+
+before(:each) do
+	visit '/'
+	click_link('Sign up')
+	fill_in('Email', with: 'test@example.com')
+	fill_in('Password', with: 'testtest')
+	fill_in('Password confirmation', with: 'testtest')
+	click_button('Sign up')
+end
+
+
 	context 'no restaurants have been added' do
 		scenario 'should desplay a prompt to add a restaurant' do
 			visit '/restaurants'
@@ -37,7 +48,7 @@ feature 'restaurants' do
 				click_link 'Add a restaurant'
 				fill_in 'Name', with: 'kf'
 				click_button 'Create Restaurant'
-				expect(page).not_to have_css 'h2', text: "kf" 
+				expect(page).not_to have_css 'h2', text: "kf"
 				expect(page).to have_content 'error'
 			end
 
